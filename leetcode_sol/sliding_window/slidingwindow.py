@@ -1,40 +1,85 @@
-class Solution:
-def variable_length_sliding_window(nums):
-  state = # choose appropriate data structure
-  start = 0
-  max_ = 0
+'''
+Creating a window that slides and instead of constantly adding up the same elements you add and subtract in the window. 
+O(n) - Every element exits and enters just once from O(n * k)
+'''
 
-  for end in range(len(nums)):
-    # extend window
-    # add nums[end] to state in O(1) in time
+def fixed_sliding_window(arr: [int], window: int) -> int: 
+    start = 0
+    window_sum = 0
+    max_sum = float('-inf')
 
-    while state is not valid:
-      # repeatedly contract window until it is valid again
-      # remove nums[start] from state in O(1) in time
-      start += 1
+    for end in range(len(arr)):
+        window_sum += arr[end]
 
-    # INVARIANT: state of current window is valid here.
-    max_ = max(max_, end - start + 1)
+        if end - start + 1 == k:
+            max_sum = max(window_sum, max_sum)
+            window_sum -= arr[start]
+            start += 1
+    
+    return max_sum
 
-  return max_
+# Longest
+def variable_sliding_window(arr: str) -> int:
+    start = 0
+    values_set = set()
+    max_len = 0
 
-    def characterReplacement(self, s: str, k: int):
-        max_val = 0
-        start = 0 
-        max_valid_window = 0
-        seen = {}
+    for end in range(len(arr)):
+        while arr[end] in values_set:
+            values_set.remove(arr[start])
+            start += 1
+        
+        values_set.add(arr[end])
+        max_len = max(max_len, end - start + 1 )
+    return max_len
 
-        for end in range(len(s)):
-            char = s[end]
+# Shortest
+def shortest_sliding_window(arr:[], find:str ) -> int:
+    start = 0
+    values_dict = dict()
+    min_len = float('inf')
 
-            seen[char] = seen.get(char, 0) + 1 
-            max_val = max(max_val, seen[char])
+    for letter  in find:
+        values_dict.setdefault(letter, 0) += 1
 
-            while (end - start + 1) - max_valid_window > k:
-                left_char = s[start]
-                char_count[left_char] -= 1
-                start += 1
+    have = {}
+    satisfied = 0
+    required = len(values_dict)
+    best_arr = []
 
-            max_valid_window = max(max_valid_window, end - start + 1)
+    for end in range(len(arr)):
+        char = arr[end]
+
+        have[char] = have.get(char, 0) + 1
+
+        if char in values_dict and have[char] == values_dict[char]:
+            satisfied += 1
+
+        while satisfied == required:
+            if end - start + 1 < min_len:
+                min_len = end - start + 1
+                best_arr = arr[start:end + 1]
+
+            start_char = arr[start]
+            have[start_char] -= 1
+            if start_char in values_dict and have[start_char] < values_dict[start_char]:
+                satisfied -= 1
+            start += 1
+    return best_arr
 
 
+
+'''
+Tests for longest substring
+'''   
+print(variable_sliding_window("abcabcbb"))
+
+print(variable_sliding_window("netflix"))
+
+print(variable_sliding_window("needajob"))
+
+print(variable_sliding_window(""))
+            
+
+
+        
