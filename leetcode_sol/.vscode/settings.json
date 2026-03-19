@@ -13,5 +13,6 @@
   "editor.inlineSuggest.enabled": false,
   "github.copilot.enable": {
     "*": false
-  }
+  },
+  "python-envs.defaultEnvManager": "ms-python.python:system"
 }
