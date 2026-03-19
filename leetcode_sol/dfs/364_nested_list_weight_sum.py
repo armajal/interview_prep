@@ -79,8 +79,6 @@ class NestedInteger:
 class Solution:
     def depthSumInverse(self, nestedList: List[NestedInteger]) -> int:
         
-        sum = 0
-
         def get_depth(nested, level):
             if nested.isInteger():
                 return level
@@ -97,7 +95,4 @@ class Solution:
         
             return total
         
-        for nested in nestedList:
-            sum += dfs(nested, 1)
-        
-        return sum
+        return sum(dfs(nested, 1) for nested in nestedList)
