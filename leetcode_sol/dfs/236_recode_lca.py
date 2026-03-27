@@ -21,7 +21,7 @@ class Solution:
                 return False
             
             left = curr.left
-            right = curr.left
+            right = curr.right
             
             node = curr == p or curr = q
             if node + left + right >= 2:
