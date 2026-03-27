@@ -52,3 +52,66 @@ def count_partitions(n: int, m: int):
     
     else:
         return count_partitions(n, m-1) + count_partitions(n - m, m)
+
+'''
+Number of Islands: given m x n grid represents 1s (land) and 0s (water), return num of islands
+    Island: surrounded by water or land is horizontal or vertical. Edges are surrounded by watter
+
+1. Start with simple base case
+1 if m = 0 or n = 0
+1 if m = edge or n = edge
+
+2. Play w/ examples
+1 1 0  3 islands            0 1 1 1 0 0 0
+0 0 1                       0 1 0 0 0 0 0 4 islands
+1 0 1                       1 0 0 0 1 0 1
+
+3. Relate to harder cases
+
+    
+4. Geneeralize
+    sum = 0
+   for i, j in mxn
+    if grid[i][j] == 1
+        dfs
+            if grid[i][j] != 1 and i or j < 0 or i, j > m-1, n-1
+                return 0
+          grid[i][j] = 0, setting as visited
+          go dfs(horizontal) and dfs vertical
+        sum += 1
+
+5. Code
+
+
+
+
+'''
+class Solution:
+    def numIslands(self, grid):
+        if not grid:
+            return 0
+
+        num_islands = 0
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if grid[i][j] == "1":
+                    self.dfs(grid, i, j)
+                    num_islands += 1
+
+        return num_islands
+
+    def dfs(self, grid, r, c):
+        if (
+            r < 0
+            or c < 0
+            or r >= len(grid)
+            or c >= len(grid[0])
+            or grid[r][c] != "1"
+        ):
+            return
+        grid[r][c] = "0"
+
+        self.dfs(grid, r - 1, c)
+        self.dfs(grid, r + 1, c)
+        self.dfs(grid, r, c - 1)
+        self.dfs(grid, r, c + 1)
